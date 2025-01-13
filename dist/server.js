@@ -8,12 +8,15 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Serve static files from the 'dist' directory
-app.use(express.static(path.join(__dirname, 'dist')));
+const distPath = path.resolve(__dirname, 'dist');
+console.log('Serving static files from:', distPath); // Debugging log
 
-// Handle any other route by returning the index.html file
+app.use(express.static(distPath));
+
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  const indexPath = path.resolve(__dirname, 'dist', 'index.html');
+  console.log('Sending index.html from:', indexPath); // Debugging log
+  res.sendFile(indexPath);
 });
 
 app.listen(port, () => {
